@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>book project</title>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="top">
+      <header class="header">
+        <h1>BOOK LIBRARY</h1>
+        <h6>Join Us By Adding Your Book</h6>
+      </header>
+      <input
+        type="button"
+        value="NEW BOOK"
+        name="add"
+        id="newbook"
+        class="add"
+      />
+    </div>
+    <form class="form" method="get">
+      <div class="formdiv">
+        <div class="card_title">
+          <h2>NEW BOOK</h2>
+        </div>
+        <label for="name">Title:</label>
+        <input type="text" name="bname" id="name" placeholder="Book Name" />
+
+        <label for="author">Author:</label>
+        <input
+          type="text"
+          name="bauthor"
+          placeholder="Author Name"
+          id="author"
+        />
+
+        <label for="pages">Number Of Pages:</label>
+        <input type="number" name="bpages" id="pages" placeholder="Pages" />
+
+        <label for="readit">Have You Read It:</label>
+        <select name="readit" id="readit">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <input type="submit" id="bsubmit" class="add" />
+      </div>
+    </form>
+  </body>
+</html>
