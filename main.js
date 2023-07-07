@@ -41,17 +41,16 @@ function render() {
       body.appendChild(BookShelf);
       bookname2.innerHTML = `Book Name : ${book.b}`;
       pages2.innerHTML = `Pages : ${book.p}`;
-      read2.innerHTML = `Have You Read It : ${book.a}`;
-      author2.innerHTML = `Author : ${book.r}`;
+      author2.innerHTML = `Have You Read It : ${book.a}`;
+      read2.innerHTML = `Author : ${book.r}`;
       BookShelf.style.display = 'flex';
     }
     //  delete book button
     deletebtn.addEventListener('click', () => {
       books.remove();
     });
+    myLibrary.splice(i, 1);
   }
-
-  myLibrary.length = 0;
 }
 
 function addbooktolibrary() {
