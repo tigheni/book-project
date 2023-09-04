@@ -11,10 +11,12 @@ const BtnSubmit = document.getElementById('bsubmit');
 
 // eslint-disable-next-line no-shadow
 function Book(bookname, author, pages, readit) {
-  this.b = bookname;
-  this.a = author;
-  this.p = pages;
-  this.r = readit;
+  return {
+    bookname,
+    author,
+    pages,
+    readit,
+  };
 }
 const BookShelf = document.createElement('div');
 BookShelf.classList.add('booksflex');
@@ -33,19 +35,17 @@ function render() {
     const deletion = document.createElement('button');
     deletion.innerHTML = 'Delete';
     deletion.classList.add('add');
-    if (book.b === undefined || book.a === undefined) {
-      break;
-    } else {
-      books.append(bookcase2, pages2, author2, read2, deletion);
-      books.classList.add('book_shelf');
-      BookShelf.appendChild(books);
-      body.appendChild(BookShelf);
-      bookcase2.innerHTML = `Book Name : ${book.b}`;
-      pages2.innerHTML = `Pages : ${book.p}`;
-      author2.innerHTML = `Have You Read It : ${book.a}`;
-      read2.innerHTML = `Author : ${book.r}`;
-      BookShelf.style.display = 'flex';
-    }
+
+    books.append(bookcase2, author2, pages2, read2, deletion);
+    books.classList.add('book_shelf');
+    BookShelf.appendChild(books);
+    body.appendChild(BookShelf);
+    bookcase2.innerHTML = `Book Name : ${book.bookname}`;
+    author2.innerHTML = `Author : ${book.author}`;
+    pages2.innerHTML = `Pages : ${book.pages}`;
+    read2.innerHTML = `Have You Read It : ${book.readit}`;
+    BookShelf.style.display = 'flex';
+
     //  delete book button
     deletion.addEventListener('click', () => {
       books.remove();
@@ -53,11 +53,11 @@ function render() {
     myLibrary.splice(i, 1);
   }
 }
+const ubook = bookname.value;
+const uauthor = author.value;
+const upages = pages.value;
+const ureadit = readit.value;
 function addbooktolibrary(e) {
-  const ubook = bookname.value;
-  const uauthor = author.value;
-  const upages = pages.value;
-  const ureadit = readit.value;
   if (
     bookname.value === '' ||
     author.value === '' ||

@@ -31,7 +31,7 @@ body {
   transition: transform ease-out 0.5s;
 }
 .add:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   color: white;
   background: rgb(89, 140, 206);
 }
