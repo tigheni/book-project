@@ -19,50 +19,56 @@ function Book(bookname, author, pages, readit) {
 const BookShelf = document.createElement('div');
 BookShelf.classList.add('booksflex');
 // push book to array
+
 function render() {
   // eslint-disable-next-line no-plusplus
 
   for (let i = 0; i < myLibrary.length; i += 1) {
     const books = document.createElement('div');
-    const bookname2 = document.createElement('h5');
+    const bookcase2 = document.createElement('h5');
     const pages2 = document.createElement('h6');
     const author2 = document.createElement('h6');
     const book = myLibrary[i];
     const read2 = document.createElement('h6');
-    const deletebtn = document.createElement('button');
-    deletebtn.innerHTML = 'Delete';
-    deletebtn.classList.add('add');
+    const deletion = document.createElement('button');
+    deletion.innerHTML = 'Delete';
+    deletion.classList.add('add');
     if (book.b === undefined || book.a === undefined) {
       break;
     } else {
-      books.append(bookname2, pages2, author2, read2, deletebtn);
+      books.append(bookcase2, pages2, author2, read2, deletion);
       books.classList.add('book_shelf');
       BookShelf.appendChild(books);
       body.appendChild(BookShelf);
-      bookname2.innerHTML = `Book Name : ${book.b}`;
+      bookcase2.innerHTML = `Book Name : ${book.b}`;
       pages2.innerHTML = `Pages : ${book.p}`;
       author2.innerHTML = `Have You Read It : ${book.a}`;
       read2.innerHTML = `Author : ${book.r}`;
       BookShelf.style.display = 'flex';
     }
     //  delete book button
-    deletebtn.addEventListener('click', () => {
+    deletion.addEventListener('click', () => {
       books.remove();
     });
     myLibrary.splice(i, 1);
   }
 }
+function addbooktolibrary(e) {
+  const ubook = bookname.value;
+  const uauthor = author.value;
+  const upages = pages.value;
+  const ureadit = readit.value;
+  if (
+    bookname.value === '' ||
+    author.value === '' ||
+    pages.value === '' ||
+    readit.value === ''
+  ) {
+    e.preventDefault();
+  }
+  const newbook = new Book(ubook, uauthor, upages, ureadit);
 
-function addbooktolibrary() {
-  const newbook = new Book(
-    bookname.value,
-    author.value,
-    pages.value,
-    // eslint-disable-next-line comma-dangle
-    readit.value
-  );
   myLibrary.push(newbook);
-
   render();
 }
 // new book button
@@ -77,6 +83,6 @@ BtnSubmit.addEventListener('click', (event) => {
   bookname.value = '';
   author.value = '';
   pages.value = '';
-  readit.valu = '';
+  readit.value = '';
   // Prevent form submission
 });
