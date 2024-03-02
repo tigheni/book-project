@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -19,9 +19,10 @@
                 name="add"
                 id="newbook"
                 class="add"
+                required
             />
         </div>
-        <form class="form" method="get">
+        <form class="form" method="POST">
             <div class="formdiv">
                 <div class="card_title">
                     <h2>NEW BOOK</h2>
@@ -29,33 +30,42 @@
                 <label for="name">Title:</label>
                 <input
                     type="text"
-                    name="bname"
+                    name="name"
                     id="name"
+                    minlength="3"
+                    maxlength="50"
                     placeholder="Book Name"
+                    required
                 />
 
                 <label for="author">Author:</label>
                 <input
                     type="text"
-                    name="bauthor"
+                    name="author"
+                    minlength="3"
+                    maxlength="50"
                     placeholder="Author Name"
                     id="author"
+                    required
                 />
 
                 <label for="pages">Number Of Pages:</label>
                 <input
                     type="number"
-                    name="bpages"
+                    name="pages"
                     id="pages"
                     placeholder="Pages"
+                    min="10"
+                    max="2000"
+                    required
                 />
 
                 <label for="readit">Have You Read It:</label>
-                <select name="readit" id="readit">
+                <select required name="read" id="readit">
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
-                <input type="submit" id="bsubmit" class="add" />
+                <input type="submit" id="submit" class="add" />
             </div>
         </form>
     </body>

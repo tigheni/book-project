@@ -1,14 +1,11 @@
-const form = document.querySelector(".form");
-const body = document.querySelector("body");
-const btn = document.querySelector("#newbook");
-const bookname = document.querySelector("#name");
+const bookName = document.querySelector("#name");
 const author = document.querySelector("#author");
 const pages = document.querySelector("#pages");
 const myLibrary = [];
-const readit = document.querySelector("#readit");
-const BtnSubmit = document.getElementById("bsubmit");
+const read = document.querySelector("#readit");
+
 let booknumber = 0;
-// eslint-disable-next-line no-shadow
+
 function Book(bookname, author, pages, readit) {
     return {
         bookname,
@@ -19,76 +16,123 @@ function Book(bookname, author, pages, readit) {
     };
 }
 
-const BookShelf = document.createElement("div");
-BookShelf.classList.add("booksflex");
-// push book to array
-
+const bookshelf = document.createElement("div");
+bookshelf.classList.add("bookshelf");
 function render() {
-    for (let i = 0; i < myLibrary.length; i += 1) {
-        const books = document.createElement("div");
-        const bookcase2 = document.createElement("h5");
-        const pages2 = document.createElement("h6");
-        const author2 = document.createElement("h6");
-        const book = myLibrary[i];
-        const read2 = document.createElement("h6");
-        const deletion = document.createElement("button");
-        deletion.innerHTML = "Delete";
-        deletion.classList.add("add");
+    const body = document.querySelector("body");
+    bookshelf.style.display = "flex";
 
-        books.append(bookcase2, author2, pages2, read2, deletion);
-        books.classList.add("book_shelf");
-        BookShelf.appendChild(books);
-        body.appendChild(BookShelf);
-        bookcase2.innerHTML = `Book Name : ${book.bookname}`;
-        author2.innerHTML = `Author : ${book.author}`;
-        pages2.innerHTML = `Pages : ${book.pages}`;
-        read2.innerHTML = `Have You Read It : ${book.readit}`;
-        BookShelf.style.display = "flex";
+    for (const book of myLibrary) {
+        const bookContainer = document.createElement("div");
+        bookContainer.classList.add("book-container");
 
-        //  delete book button
-        deletion.addEventListener("click", () => {
-            books.remove();
+        const bookName = document.createElement("h5");
+        const author = document.createElement("h6");
+        const pages = document.createElement("h6");
+        const readStatus = document.createElement("h6");
+        const deleteButton = document.createElement("button");
+
+        bookName.textContent = `Book Name: ${book.bookname}`;
+        author.textContent = `Author: ${book.author}`;
+        pages.textContent = `Pages: ${book.pages}`;
+        readStatus.textContent = `Have You Read It: ${book.readit}`;
+        deleteButton.textContent = "Delete";
+
+        deleteButton.classList.add("delete-button");
+        bookContainer.classList.add("book");
+
+        deleteButton.addEventListener("click", () => {
+            bookContainer.remove();
         });
-        const bookIndex = myLibrary.findIndex(
-            (book) => book.id === myLibrary[i].id
-        );
-        // Remove the book from the array
-        myLibrary.splice(bookIndex, 1);
+        const bookIndex = myLibrary.findIndex((b) => b.id === book.id);
+        if (bookIndex !== -1) {
+            myLibrary.splice(bookIndex, 1);
+        }
+
+        bookContainer.append(bookName, author, pages, readStatus, deleteButton);
+        bookshelf.appendChild(bookContainer);
     }
+
+    body.appendChild(bookshelf);
 }
+
 // Prevent form submission
 function clearFormFields() {
-    bookname.value = "";
+    bookName.value = "";
     author.value = "";
     pages.value = "";
-    readit.value = "";
+    read.value = "";
 }
-
-function addbooktolibrary(e) {
-    const ubook = bookname.value;
+function doMagic(thebook) {
+    myLibrary.push(thebook);
+    render();
+}
+function addbooktolibrary() {
+    const ubook = bookName.value;
     const uauthor = author.value;
     const upages = pages.value;
-    const ureadit = readit.value;
-    if (ubook === "" || uauthor === "" || upages === "" || ureadit === "") {
-        e.preventDefault();
-    }
-    const newbook = new Book(ubook, uauthor, upages, ureadit);
+    const uread = read.value;
+
+    const newbook = new Book(ubook, uauthor, upages, uread);
 
     doMagic(newbook);
     clearFormFields();
 }
 
-function doMagic(thebook) {
-    myLibrary.push(thebook);
-    render();
-}
+const newBookBtn = document.querySelector("#newbook");
 
 // new book button
-btn.addEventListener("click", () => {
+newBookBtn.addEventListener("click", (e) => {
+    const form = document.querySelector(".form");
+
     form.style.display = "block";
 });
 
-BtnSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
+bookName.addEventListener("input", (e) => {
+    if (bookName.validity.valueMissing) {
+        e.preventDefault();
+        bookName.setCustomValidity("Please enter a book name.");
+    } else if (bookName.validity.tooShort) {
+        e.preventDefault();
+        bookName.setCustomValidity("Please enter a valid  book name.");
+    } else {
+        bookName.setCustomValidity("");
+    }
+});
+
+author.addEventListener("input", (e) => {
+    if (author.validity.tooShort) {
+        author.setCustomValidity("Please enter an valid author name.");
+        e.preventDefault();
+    } else {
+        author.setCustomValidity("");
+    }
+});
+
+pages.addEventListener("input", (e) => {
+    if (pages.validity.rangeOverflow) {
+        e.preventDefault();
+        pages.setCustomValidity("Please enter the number below of 1000.");
+    } else if (pages.validity.rangeUnderflow) {
+        pages.setCustomValidity("Please enter the number  above of 10.");
+        e.preventDefault();
+    } else {
+        pages.setCustomValidity("");
+    }
+});
+
+read.addEventListener("change", (e) => {
+    if (read.value === "") {
+        e.preventDefault();
+        read.setCustomValidity("Please specify if you have read the book.");
+    } else {
+        read.setCustomValidity("");
+    }
+});
+const submission = document.getElementById("submit");
+const form = document.querySelector("form");
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
     addbooktolibrary();
 });
